@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { HubHttpClient } from "../http_client.js";
-import { BalancesResponse } from "../types.js";
+import { HubHttpClient } from "../../http_client.js";
+import { BalancesResponse } from "../../types.js";
 
 export function registerGetBalancesTool(
   server: McpServer,
