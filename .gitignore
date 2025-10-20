@@ -1,0 +1,9 @@
+node_modules/
+build/
+dist/
+.env
+.DS_Store
+*.log
+*.tsbuildinfo
+package-lock.json
+prompt1.txt
