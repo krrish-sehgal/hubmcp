@@ -96,12 +96,13 @@ Onchain ↔ Lightning swaps.
 - `create_swap_out` - Create swap out (Lightning -> On-chain)
 - `create_swap_in` - Create swap in (On-chain -> Lightning)
 
-### [Autoswap Tools](./autoswap/README.md) - 2 tools
+### [Autoswap Tools](./autoswap/README.md) - 3 tools
 
 Automatic balance management.
 
 - `get_autoswap_settings` - Get settings
-- `update_autoswap_settings` - Update settings
+- `update_autoswap_settings` - Enable/configure autoswap
+- `disable_autoswap` - Disable autoswap
 
 ### [Node Tools](./node/README.md) - 3 tools
 
@@ -142,7 +143,7 @@ Authentication and setup.
 
 ---
 
-## 📊 Total: 59 Tools
+## 📊 Total: 60 Tools
 
 ## 🚀 Quick Start
 

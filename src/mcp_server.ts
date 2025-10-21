@@ -51,6 +51,7 @@ import {
 // Autoswap imports
 import { registerGetAutoswapSettingsTool } from "./tools/autoswap/get_autoswap_settings.js";
 import { registerUpdateAutoswapSettingsTool } from "./tools/autoswap/update_autoswap_settings.js";
+import { registerDisableAutoswapTool } from "./tools/autoswap/disable_autoswap.js";
 // Node imports
 import { registerGetNodeStatusTool } from "./tools/node/get_node_status.js";
 import { registerGetNodeConnectionInfoTool } from "./tools/node/get_node_connection_info.js";
@@ -138,6 +139,7 @@ export function createMCPServer(client: HubHttpClient): McpServer {
   // Autoswap
   registerGetAutoswapSettingsTool(server, client);
   registerUpdateAutoswapSettingsTool(server, client);
+  registerDisableAutoswapTool(server, client);
 
   // Node
   registerGetNodeStatusTool(server, client);

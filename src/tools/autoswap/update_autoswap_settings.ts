@@ -11,22 +11,34 @@ export function registerUpdateAutoswapSettingsTool(
     {
       title: "Update Autoswap Settings",
       description:
-        "Updates autoswap configuration settings to automatically swap between onchain and lightning.",
+        "Enables and configures autoswap to automatically swap Lightning funds to on-chain when balance exceeds threshold. **Requires full access token.**",
       inputSchema: {
-        enabled: z.boolean().optional(),
-        minBalanceSats: z.number().int().optional(),
-        maxBalanceSats: z.number().int().optional(),
+        balanceThreshold: z
+          .number()
+          .int()
+          .describe(
+            "Balance threshold in satoshis - autoswap triggers when Lightning balance exceeds this"
+          ),
+        swapAmount: z
+          .number()
+          .int()
+          .describe("Amount in satoshis to swap out each time"),
+        destination: z
+          .string()
+          .describe("Bitcoin on-chain address to receive swapped funds"),
       },
       outputSchema: {},
     },
     async (params) => {
-      const result = await client.request<any>("/api/autoswap/settings", {
-        method: "PATCH",
-        body: params,
+      const result = await client.post<any>("/api/autoswap", {
+        balanceThreshold: params.balanceThreshold,
+        swapAmount: params.swapAmount,
+        destination: params.destination,
       });
       return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-        structuredContent: result,
+        content: [
+          { type: "text", text: "Autoswap settings updated successfully" },
+        ],
       };
     }
   );
