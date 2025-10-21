@@ -38,8 +38,6 @@ import { registerTransferFundsTool } from "./tools/apps/transfer_funds.js";
 // Lightning Address imports
 import { registerCreateLightningAddressTool } from "./tools/lightning_address/create_lightning_address.js";
 import { registerDeleteLightningAddressTool } from "./tools/lightning_address/delete_lightning_address.js";
-import { registerListLightningAddressesTool } from "./tools/lightning_address/list_lightning_addresses.js";
-import { registerGetLightningAddressByIdTool } from "./tools/lightning_address/get_lightning_address_by_id.js";
 // Swaps imports
 import { registerListSwapsTool } from "./tools/swaps/list_swaps.js";
 import { registerCreateSwapTool } from "./tools/swaps/create_swap.js";
@@ -121,8 +119,6 @@ export function createMCPServer(client: HubHttpClient): McpServer {
   registerTransferFundsTool(server, client);
 
   // Lightning Addresses
-  registerListLightningAddressesTool(server, client);
-  registerGetLightningAddressByIdTool(server, client);
   registerCreateLightningAddressTool(server, client);
   registerDeleteLightningAddressTool(server, client);
 

@@ -1,29 +1,10 @@
 # Lightning Address Tools Reference
 
-## Tools in this category: 4
+## Tools in this category: 2
 
 Lightning addresses are email-like identifiers (user@domain.com) for receiving lightning payments.
 
----
-
-## list_lightning_addresses
-
-**Function:** `GET /api/lightning-addresses`  
-**Description:** Lists all lightning addresses configured for your apps.  
-**Required Input:** None  
-**Test Prompt:** "Show me all my lightning addresses"
-
----
-
-## get_lightning_address_by_id
-
-**Function:** `GET /api/lightning-addresses/:appId`  
-**Description:** Retrieves the lightning address for a specific app.  
-**Required Input:**
-
-- `appId` (number, required): App ID
-
-**Test Prompt:** "Get lightning address for app 5"
+**Note:** The Alby Hub API only provides create and delete endpoints for lightning addresses. To view existing lightning addresses, use the `list_apps` tool which includes lightning address information for each app.
 
 ---
 
@@ -49,6 +30,13 @@ Lightning addresses are email-like identifiers (user@domain.com) for receiving l
 - `appId` (number, required): App ID
 
 **Test Prompt:** "Delete lightning address for app 5"
+
+---
+
+## Related Tools
+
+- `list_apps` - View all apps with their lightning addresses
+- `get_app_by_id` - Get details for a specific app including its lightning address
 
 ---
 

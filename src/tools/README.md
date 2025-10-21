@@ -79,12 +79,10 @@ Nostr Wallet Connect app management.
 - `delete_app` - Delete app
 - `transfer_funds` - Transfer between apps
 
-### [Lightning Address Tools](./lightning_address/README.md) - 4 tools
+### [Lightning Address Tools](./lightning_address/README.md) - 2 tools
 
 Lightning address management.
 
-- `list_lightning_addresses` - List addresses
-- `get_lightning_address_by_id` - Get address
 - `create_lightning_address` - Create address
 - `delete_lightning_address` - Delete address
 
