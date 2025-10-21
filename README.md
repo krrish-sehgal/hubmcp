@@ -1,21 +1,38 @@
 # Alby Hub MCP Server
 
-A Model Context Protocol (MCP) server for interacting with [Alby Hub](https://albyhub.com/) via its experimental developer API.
+A comprehensive Model Context Protocol (MCP) server for interacting with [Alby Hub](https://albyhub.com/) - your self-custodial Lightning node and Bitcoin wallet.
 
-This MCP server exposes three tools to interact with your Alby Hub:
+This MCP server provides **58 tools** across 16 categories, giving AI agents complete control over your Lightning Network operations, on-chain transactions, channel management, and more.
 
-- **get_balances** (readonly) - Get current lightning and onchain balances
-- **create_invoice** (full access) - Create a lightning invoice
-- **pay_invoice** (full access) - Pay a lightning invoice (BOLT11/BOLT12)
+## 🚀 Features
 
-## Features
+- ✅ **58 Tools** across 16 categories - Complete Alby Hub API coverage
+- ✅ **STDIO transport** (default) - Perfect for local AI agents like Goose, Claude Desktop
+- ✅ **HTTP Streamable transport** - For remote/hosted scenarios
+- ✅ **Bearer authentication** - Secure API token-based authentication
+- ✅ **TypeScript** - Full type safety and excellent IDE support
+- ✅ **Organized structure** - Tools categorized by functionality
+- ✅ **Comprehensive docs** - README for each category with examples
 
-- ✅ STDIO transport (default) - perfect for local AI agents like Goose, Claude Desktop
-- ✅ HTTP Streamable transport - for remote/hosted scenarios
-- ✅ Bearer authentication support
-- ✅ Clear error messages for auth failures, validation errors
-- ✅ Timeout configuration
-- ✅ TypeScript with full type safety
+## 📦 Tool Categories
+
+- **System** (2 tools) - Hub info, health checks
+- **Wallet** (8 tools) - Balances, addresses, signing, on-chain operations
+- **Transactions** (3 tools) - Lightning and on-chain transaction history
+- **Payments** (3 tools) - Send payments, route probing
+- **Invoices** (2 tools) - Create BOLT11/BOLT12 invoices
+- **Channels** (6 tools) - Open, close, rebalance Lightning channels
+- **Peers** (3 tools) - Connect to Lightning Network peers
+- **Apps (NWC)** (7 tools) - Nostr Wallet Connect app management
+- **Lightning Address** (2 tools) - Lightning address management
+- **Swaps** (5 tools) - Submarine swaps (on-chain ↔ Lightning)
+- **Autoswap** (3 tools) - Automatic balance management
+- **Node** (3 tools) - Node status and network graph
+- **Logs** (1 tool) - Application logs
+- **Settings** (2 tools) - Hub configuration
+- **Admin** (4 tools) - Hub administration
+
+> **📖 Full tool reference:** See [src/tools/README.md](./src/tools/README.md) for complete documentation
 
 ## Quick Start
 
@@ -76,11 +93,14 @@ ALBY_HUB_API_TOKEN=your_api_token_here
    - `ALBY_HUB_URL`: Your hub URL
    - `ALBY_HUB_API_TOKEN`: Your API token
 
-Now you can ask Goose to:
+Now you can ask Goose natural language commands like:
 
 - "Check my Alby Hub balance"
-- "Create a lightning invoice for 1000 sats with description 'Coffee'"
+- "Create a 1000 sat invoice for coffee"
 - "Pay this invoice: lnbc..."
+- "Open a channel to this node with 500k sats"
+- "What are the fees for swapping lightning to on-chain?"
+- "Show me my recent transactions"
 
 ### With Claude Desktop
 
@@ -120,75 +140,54 @@ The server will be available at `http://localhost:3000/mcp`
 
 **Security Note**: When using HTTP mode, implement your own authentication layer. Don't expose this directly to the internet with just the API token.
 
-## Tools Reference
+## 📚 Documentation
 
-### get_balances
+### Tool Categories & Examples
 
-Get current wallet balances (readonly operation).
+**💰 Wallet & Balances**
 
-**Input**: None
+- Get balances (Lightning + on-chain)
+- Generate new addresses
+- Sign messages
+- Send on-chain bitcoin
 
-**Output**:
+**⚡ Lightning Operations**
 
-```json
-{
-  "onchain": {
-    "spendable": 50000,
-    "total": 50000
-  },
-  "lightning": {
-    "totalSpendable": 100000,
-    "totalReceivable": 50000,
-    "nextMaxSpendable": 100000,
-    "nextMaxReceivable": 50000
-  }
-}
-```
+- Create invoices (BOLT11/BOLT12)
+- Pay invoices
+- Send spontaneous payments (keysend)
+- Probe payment routes
 
-### create_invoice
+**🔌 Channel Management**
 
-Create a lightning invoice (requires full access token).
+- List channels
+- Open new channels with peers
+- Close channels
+- Rebalance channels
+- Get channel recommendations
 
-**Input**:
+**🔄 Swaps & Autoswap**
 
-- `amount` (number): Amount in millisatoshis (msats)
-- `description` (string): Invoice description
+- Swap Lightning ↔ On-chain
+- Get swap fees and limits
+- Configure automatic swapping
+- Enable/disable autoswap
 
-**Output**:
+**👥 Apps & Connections**
 
-```json
-{
-  "invoice": "lnbc...",
-  "paymentHash": "abc123...",
-  "amount": 1000000,
-  "state": "created",
-  "createdAt": "2024-01-01T00:00:00Z"
-}
-```
+- Manage Nostr Wallet Connect apps
+- Create Lightning addresses
+- Connect to peers
+- Transfer funds between apps
 
-### pay_invoice
+**⚙️ Administration**
 
-Pay a lightning invoice (requires full access token).
+- View hub info and settings
+- Update currency preferences
+- Access logs
+- Manage hub services
 
-**Input**:
-
-- `invoice` (string): BOLT11 or BOLT12 invoice
-- `amount` (number, optional): Amount in msats (required for zero-amount invoices)
-- `metadata` (object, optional): Additional metadata
-
-**Output**:
-
-```json
-{
-  "type": "outgoing",
-  "state": "settled",
-  "paymentHash": "xyz789...",
-  "amount": 1000000,
-  "feesPaid": 100,
-  "createdAt": "2024-01-01T00:00:00Z",
-  "settledAt": "2024-01-01T00:00:01Z"
-}
-```
+> **📖 Complete API reference:** [src/tools/README.md](./src/tools/README.md)
 
 ## Error Handling
 
@@ -228,42 +227,74 @@ For remote/hosted scenarios. Requires additional authentication layer for produc
 
 To use HTTP transport, set `MODE=http` in environment variables.
 
-## Testing
+## 🧪 Testing
 
 ### Test with readonly token:
 
 1. Set a readonly token in `.env`
-2. `get_balances` should work
-3. `create_invoice` should return 403
+2. Read-only tools should work (balances, info, lists)
+3. Write operations should return 403 Forbidden
 
 ### Test with full access token:
 
 1. Set a full access token in `.env`
-2. All tools should work
-3. Create an invoice and verify the invoice string
-4. Pay a valid invoice (ensure sufficient balance)
+2. All 58 tools should work
+3. Test incrementally (start with safe read operations)
+4. Use testnet/regtest for learning
 
-## Security
+### Quick Tests
 
-- Never commit `.env` file or expose API tokens
-- Use readonly tokens when only balance checking is needed
-- Use full access tokens only when necessary
-- In HTTP mode, add your own auth layer (don't rely solely on API token)
-- Enable CORS appropriately for HTTP mode
-- Don't log secrets
+```bash
+# Test available (in project root)
+node test-settings.js      # Test settings endpoints
+node test-swaps.js         # Test swap operations
+node test-autoswap.js      # Test autoswap configuration
+node test-app-logs.js      # Test log retrieval
+```
+
+## 🔒 Security
+
+- ⚠️ **Never commit `.env`** - Contains sensitive API tokens
+- 🔑 **Token permissions** - Use readonly tokens when possible
+- 🌐 **HTTP mode** - Add authentication layer for production
+- 🚫 **Don't expose publicly** - Local use recommended
+- 🧪 **Test on regtest** - Learn safely without real funds
+- 📝 **Be cautious** - Tools can send real bitcoin and trigger swaps
+
+## ⚡ What is Alby Hub?
+
+[Alby Hub](https://albyhub.com/) is your self-custodial Lightning node and Bitcoin wallet:
+
+- 🏠 **Self-custodial** - You control your keys
+- ⚡ **Lightning Network** - Send/receive instant payments
+- 🔗 **Multiple backends** - LND, Core Lightning, Phoenixd, Breez SDK
+- 🌐 **Nostr Wallet Connect** - Connect to Nostr apps
+- 💼 **Multi-app support** - Isolated budgets and permissions
+- 🔄 **Submarine swaps** - Exchange Lightning ↔ On-chain seamlessly
 
 ## License
 
 Apache-2.0
 
-## Support
+## 📖 Resources
 
-For issues with:
+- **Tool Documentation**: [src/tools/README.md](./src/tools/README.md) - Complete tool reference
+- **Alby Hub**: [albyhub.com](https://albyhub.com/) - Download and setup
+- **Alby Support**: [support.getalby.com](https://support.getalby.com/) - Help and tutorials
+- **MCP Specification**: [modelcontextprotocol.io](https://modelcontextprotocol.io/) - Learn about MCP
+- **Goose**: [block.github.io/goose](https://block.github.io/goose/) - AI agent framework
 
-- This MCP server: Open an issue on GitHub
-- Alby Hub API: Visit [Alby Support](https://support.getalby.com/)
-- Goose integration: Check [Goose documentation](https://block.github.io/goose/)
+## 🤝 Support & Contributing
 
-## Contributing
+- 🐛 **Issues**: Open an issue on GitHub for bugs or feature requests
+- 💡 **Ideas**: Share your suggestions and use cases
+- 🔧 **Pull Requests**: Contributions welcome!
+- 💬 **Community**: Join [Alby Discord](https://discord.gg/satoshispritz) for discussions
 
-Contributions welcome! Please feel free to submit a Pull Request.
+## 📄 License
+
+MIT License
+
+---
+
+**Made with ⚡ for the Lightning Network**
