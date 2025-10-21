@@ -86,13 +86,15 @@ Lightning address management.
 - `create_lightning_address` - Create address
 - `delete_lightning_address` - Delete address
 
-### [Swap Tools](./swaps/README.md) - 3 tools
+### [Swap Tools](./swaps/README.md) - 5 tools
 
 Onchain ↔ Lightning swaps.
 
 - `list_swaps` - List all swaps
-- `create_swap` - Create new swap
-- `get_swap_info` - Get swap details
+- `get_swap_out_info` - Get swap out fees/limits
+- `get_swap_in_info` - Get swap in fees/limits
+- `create_swap_out` - Create swap out (Lightning -> On-chain)
+- `create_swap_in` - Create swap in (On-chain -> Lightning)
 
 ### [Autoswap Tools](./autoswap/README.md) - 2 tools
 
@@ -140,7 +142,7 @@ Authentication and setup.
 
 ---
 
-## 📊 Total: 57 Tools
+## 📊 Total: 59 Tools
 
 ## 🚀 Quick Start
 

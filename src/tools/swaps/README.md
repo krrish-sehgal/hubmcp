@@ -1,6 +1,6 @@
 # Swap Tools Reference
 
-## Tools in this category: 3
+## Tools in this category: 5
 
 Submarine swaps exchange onchain bitcoin for lightning bitcoin (and vice versa).
 
@@ -15,35 +15,55 @@ Submarine swaps exchange onchain bitcoin for lightning bitcoin (and vice versa).
 
 ---
 
-## create_swap
+## get_swap_out_info
 
-**Function:** `POST /api/swaps`  
-**Description:** Creates a new submarine swap to exchange onchain bitcoin for lightning or vice versa. **Requires full access token.**  
-**Required Input:**
-
-- `amount` (number, required): Amount in satoshis
-- `direction` (string, required): "onchain_to_lightning" or "lightning_to_onchain"
-
-**Test Prompt:** "Create a swap to convert 100000 sats from onchain to lightning"
+**Function:** `GET /api/swaps/out/info`  
+**Description:** Retrieves fee and limit information for swap out operations (Lightning to On-chain). Shows Alby service fee, Boltz service fee, network fee, and min/max amounts.  
+**Required Input:** None  
+**Test Prompt:** "What are the fees for swapping lightning to onchain?"
 
 ---
 
-## get_swap_info
+## get_swap_in_info
 
-**Function:** `GET /api/swaps/:swapId`  
-**Description:** Retrieves detailed information about a specific swap including status and transaction details.  
+**Function:** `GET /api/swaps/in/info`  
+**Description:** Retrieves fee and limit information for swap in operations (On-chain to Lightning). Shows Alby service fee, Boltz service fee, network fee, and min/max amounts.  
+**Required Input:** None  
+**Test Prompt:** "What are the fees for swapping onchain to lightning?"
+
+---
+
+## create_swap_out
+
+**Function:** `POST /api/swaps/out`  
+**Description:** Creates a swap out operation to exchange Lightning funds for on-chain bitcoin. **Requires full access token.**  
 **Required Input:**
 
-- `swapId` (string, required): Swap ID
+- `swapAmount` (number, required): Amount in satoshis to swap
+- `destination` (string, required): Bitcoin on-chain address to receive funds
 
-**Test Prompt:** "Get info for swap abc123"
+**Test Prompt:** "Swap 50000 sats from lightning to onchain address bcrt1q..."
+
+---
+
+## create_swap_in
+
+**Function:** `POST /api/swaps/in`  
+**Description:** Creates a swap in operation to exchange on-chain bitcoin for Lightning funds. **Requires full access token.**  
+**Required Input:**
+
+- `swapAmount` (number, required): Amount in satoshis to swap
+
+**Test Prompt:** "Swap 50000 sats from onchain to lightning"
 
 ---
 
 ## Testing Notes
 
 - **CAUTION**: Swaps involve real bitcoin and fees!
+- Check fee info before creating swaps
+- Minimum amount: 25,000 sats (25k)
+- Maximum amount: 25,000,000 sats (25M)
 - Test with small amounts first
 - Monitor swap status (can take time to complete)
-- Understand swap fees before creating
-- Use testnet for learning
+- Use testnet/regtest for learning

@@ -40,8 +40,14 @@ import { registerCreateLightningAddressTool } from "./tools/lightning_address/cr
 import { registerDeleteLightningAddressTool } from "./tools/lightning_address/delete_lightning_address.js";
 // Swaps imports
 import { registerListSwapsTool } from "./tools/swaps/list_swaps.js";
-import { registerCreateSwapTool } from "./tools/swaps/create_swap.js";
-import { registerGetSwapInfoTool } from "./tools/swaps/get_swap_info.js";
+import {
+  registerCreateSwapOutTool,
+  registerCreateSwapInTool,
+} from "./tools/swaps/create_swap.js";
+import {
+  registerGetSwapOutInfoTool,
+  registerGetSwapInInfoTool,
+} from "./tools/swaps/get_swap_info.js";
 // Autoswap imports
 import { registerGetAutoswapSettingsTool } from "./tools/autoswap/get_autoswap_settings.js";
 import { registerUpdateAutoswapSettingsTool } from "./tools/autoswap/update_autoswap_settings.js";
@@ -124,8 +130,10 @@ export function createMCPServer(client: HubHttpClient): McpServer {
 
   // Swaps
   registerListSwapsTool(server, client);
-  registerCreateSwapTool(server, client);
-  registerGetSwapInfoTool(server, client);
+  registerGetSwapOutInfoTool(server, client);
+  registerGetSwapInInfoTool(server, client);
+  registerCreateSwapOutTool(server, client);
+  registerCreateSwapInTool(server, client);
 
   // Autoswap
   registerGetAutoswapSettingsTool(server, client);
