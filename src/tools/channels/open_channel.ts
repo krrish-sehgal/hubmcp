@@ -13,7 +13,7 @@ export function registerOpenChannelTool(
       description: "Open a lightning channel to a peer (full access)",
       inputSchema: {
         pubkey: z.string().min(1).describe("Peer node public key"),
-        capacity: z
+        amountSats: z
           .number()
           .int()
           .positive()
@@ -34,7 +34,7 @@ export function registerOpenChannelTool(
     async (params) => {
       const result = await client.post<any>("/api/channels", {
         pubkey: params.pubkey,
-        capacity: params.capacity,
+        amountSats: params.amountSats,
         public: params.public ?? undefined,
         host: params.host ?? undefined,
         port: params.port ?? undefined,
