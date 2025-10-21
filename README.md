@@ -242,16 +242,6 @@ To use HTTP transport, set `MODE=http` in environment variables.
 3. Test incrementally (start with safe read operations)
 4. Use testnet/regtest for learning
 
-### Quick Tests
-
-```bash
-# Test available (in project root)
-node test-settings.js      # Test settings endpoints
-node test-swaps.js         # Test swap operations
-node test-autoswap.js      # Test autoswap configuration
-node test-app-logs.js      # Test log retrieval
-```
-
 ## 🔒 Security
 
 - ⚠️ **Never commit `.env`** - Contains sensitive API tokens
@@ -272,10 +262,6 @@ node test-app-logs.js      # Test log retrieval
 - 💼 **Multi-app support** - Isolated budgets and permissions
 - 🔄 **Submarine swaps** - Exchange Lightning ↔ On-chain seamlessly
 
-## License
-
-Apache-2.0
-
 ## 📖 Resources
 
 - **Tool Documentation**: [src/tools/README.md](./src/tools/README.md) - Complete tool reference
@@ -288,8 +274,6 @@ Apache-2.0
 
 - 🐛 **Issues**: Open an issue on GitHub for bugs or feature requests
 - 💡 **Ideas**: Share your suggestions and use cases
-- 🔧 **Pull Requests**: Contributions welcome!
-- 💬 **Community**: Join [Alby Discord](https://discord.gg/satoshispritz) for discussions
 
 ## 📄 License
 
