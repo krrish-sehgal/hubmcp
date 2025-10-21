@@ -7,25 +7,34 @@ export function registerGetLogsTool(server: McpServer, client: HubHttpClient) {
     "get_logs",
     {
       title: "Get Logs",
-      description: "Retrieves application logs for debugging and monitoring.",
+      description:
+        "Retrieves application or node logs for debugging and monitoring. Log type must be either 'node' (LND logs) or 'app' (Alby Hub logs).",
       inputSchema: {
-        limit: z.number().int().optional(),
-        offset: z.number().int().optional(),
+        type: z
+          .enum(["node", "app"])
+          .describe(
+            "Type of logs to retrieve: 'node' for LND logs, 'app' for Alby Hub logs"
+          ),
+        maxLen: z
+          .number()
+          .int()
+          .optional()
+          .describe("Maximum number of log lines to return"),
       },
       outputSchema: {},
     },
     async (params) => {
-      const queryParams = new URLSearchParams();
-      if (params.limit) queryParams.append("limit", params.limit.toString());
-      if (params.offset) queryParams.append("offset", params.offset.toString());
+      const queryParams: Record<string, string | number> = {};
+      if (params.maxLen !== undefined) {
+        queryParams.maxLen = params.maxLen;
+      }
 
-      const url = `/api/logs${
-        queryParams.toString() ? `?${queryParams.toString()}` : ""
-      }`;
-      const result = await client.get<any>(url);
+      const url = `/api/log/${params.type}`;
+      const result = await client.get<{ logs: string }>(url, queryParams);
+
+      // Return the logs string directly for better readability
       return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-        structuredContent: result,
+        content: [{ type: "text" as const, text: result.logs }],
       };
     }
   );

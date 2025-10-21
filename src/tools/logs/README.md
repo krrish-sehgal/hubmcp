@@ -6,20 +6,34 @@
 
 ## get_logs
 
-**Function:** `GET /api/logs`  
-**Description:** Retrieves application logs for debugging and monitoring with pagination support.  
+**Function:** `GET /api/log/:type?maxLen=<number>`  
+**Description:** Retrieves application or node logs for debugging and monitoring. Log type must be either 'node' (LND logs) or 'app' (Alby Hub logs).  
 **Required Input:**
 
-- `limit` (number, optional): Number of log entries to return
-- `offset` (number, optional): Pagination offset
+- `type` (string, required): Type of logs to retrieve - either "node" for LND logs (This should not be supported as node logs are huge and can't fit in grpc limit) or "app" for Alby Hub logs
+- `maxLen` (number, optional): Maximum number of log lines to return
 
-**Test Prompt:** "Show me the last 50 log entries"
+**Response Format:**
+
+```json
+{
+  "logs": "...log content as a string..."
+}
+```
+
+**Test Prompts:**
+
+- "Show me the Alby Hub application logs"
+- "Get the last 100 lines of node logs"
+- "Show me LND logs"
 
 ---
 
 ## Testing Notes
 
 - Read-only operation, safe to use
-- Use limit to avoid large responses
+- Use `type: "app"` for Alby Hub application logs
+- Use `type: "node"` for LND node logs
+- Use `maxLen` to limit the number of log lines returned
 - Useful for troubleshooting issues
 - May contain sensitive information
