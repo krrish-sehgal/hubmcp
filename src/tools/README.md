@@ -134,16 +134,9 @@ System administration (use with caution!).
 - `encrypt_disk` - Enable disk encryption
 - `change_unlock_password` - Change password
 
-### [Auth Tools](./auth/README.md) - 2 tools
-
-Authentication and setup.
-
-- `setup_credentials` - Initial setup
-- `unlock_hub` - Unlock hub
-
 ---
 
-## 📊 Total: 60 Tools
+## 📊 Total: 58 Tools
 
 ## 🚀 Quick Start
 

@@ -66,9 +66,6 @@ import { registerStartHubTool } from "./tools/admin/start_hub.js";
 import { registerStopHubTool } from "./tools/admin/stop_hub.js";
 import { registerEncryptDiskTool } from "./tools/admin/encrypt_disk.js";
 import { registerChangeUnlockPasswordTool } from "./tools/admin/change_unlock_password.js";
-// Auth imports
-import { registerSetupCredentialsTool } from "./tools/auth/setup_credentials.js";
-import { registerUnlockHubTool } from "./tools/auth/unlock_hub.js";
 
 export function createMCPServer(client: HubHttpClient): McpServer {
   const server = new McpServer({
@@ -158,10 +155,6 @@ export function createMCPServer(client: HubHttpClient): McpServer {
   registerStopHubTool(server, client);
   registerEncryptDiskTool(server, client);
   registerChangeUnlockPasswordTool(server, client);
-
-  // Auth
-  registerSetupCredentialsTool(server, client);
-  registerUnlockHubTool(server, client);
 
   return server;
 }
