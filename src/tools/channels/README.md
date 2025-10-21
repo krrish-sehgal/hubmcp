@@ -29,7 +29,7 @@
 **Required Input:**
 
 - `pubkey` (string, required): Peer node public key
-- `capacity` (number, required): Channel capacity in satoshis
+- `amountSats` (number, required): Channel capacity in satoshis
 - `public` (boolean, optional): Make channel public (default: false)
 - `host` (string, optional): Peer host address
 - `port` (number, optional): Peer port number
@@ -51,6 +51,8 @@
 **Test Prompt:** "Close channel abc123 with peer xyz789"
 
 ---
+
+//under 2 both not tested
 
 ## update_channel
 
