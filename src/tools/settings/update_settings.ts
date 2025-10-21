@@ -10,20 +10,29 @@ export function registerUpdateSettingsTool(
     "update_settings",
     {
       title: "Update Settings",
-      description: "Updates hub configuration settings.",
+      description:
+        "Updates the hub currency setting. Only currency can be updated via this endpoint.",
       inputSchema: {
-        settings: z.record(z.unknown()),
+        currency: z
+          .string()
+          .describe("Currency code (e.g., 'USD', 'EUR', 'BTC')"),
       },
       outputSchema: {},
     },
     async (params) => {
+      // PATCH /api/settings - only currency can be updated
       const result = await client.request<any>("/api/settings", {
         method: "PATCH",
-        body: params.settings,
+        body: { currency: params.currency },
       });
+      // If 204 No Content, return a success message
       return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-        structuredContent: result,
+        content: [
+          {
+            type: "text",
+            text: `Currency updated to ${params.currency} successfully (HTTP 204)`,
+          },
+        ],
       };
     }
   );

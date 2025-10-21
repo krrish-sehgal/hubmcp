@@ -15,7 +15,8 @@ export function registerGetSettingsTool(
       outputSchema: {},
     },
     async () => {
-      const result = await client.get<any>("/api/settings");
+      // The correct endpoint is /api/info
+      const result = await client.get<any>("/api/info");
       return {
         content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         structuredContent: result,
